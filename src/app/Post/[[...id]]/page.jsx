@@ -144,6 +144,7 @@ const Post = () => {
     {conditionallyRenderEmbedded() &&  <article className="margin-top-spacing">
         <p id="bold">Video Embedded URL (Plugin)</p>
         <input
+          disabled={slug}
           type="text"
           placeholder="Enter embeded video URL"
           value={videoUrl}

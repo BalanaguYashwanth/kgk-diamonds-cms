@@ -30,7 +30,7 @@ const Preview = () => {
         ) : null;
       })}
 
-      <div className="footer">This is a preview. Content is not yet published.</div>
+      <div className="footer">This is a preview content</div>
     </main>
   );
 };
