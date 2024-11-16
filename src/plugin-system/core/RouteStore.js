@@ -1,7 +1,7 @@
 export class RouteStore {
-    private routes: any[] = [];
+    routes= [];
   
-    registerRoute(route: any) {
+    registerRoute(route) {
       this.routes.push(route);
     }
   

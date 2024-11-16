@@ -1,9 +1,9 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
-import {initialPost, paths} from '../../common/constants'
+import {paths} from '../../common/constants'
 import { fetchPosts } from '../../common/api.action';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import './posts.css'
 
 const Posts = () => {
@@ -35,6 +35,7 @@ const Posts = () => {
 
     return (
         <main className='post-container'>
+            <Toaster />
             <div className='justify-between'>
                 <h1>Posts</h1>
                 <button onClick={handlePostRedirection}>➕</button>

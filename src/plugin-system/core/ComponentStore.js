@@ -1,12 +1,11 @@
 export class ComponentStore {
-    private components: Record<string, any> = {
-    };
+    components = {};
 
     registerComponent({name, component}) {
       this.components[name] = component;
     }
   
-    getComponent(name: string) {
+    getComponent(name) {
       return this.components[name];
     }
   
