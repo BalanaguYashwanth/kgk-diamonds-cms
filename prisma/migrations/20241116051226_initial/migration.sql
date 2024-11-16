@@ -1,14 +1,14 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "Post" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-  - You are about to drop the `VideoEmbed` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "VideoEmbed" DROP CONSTRAINT "VideoEmbed_postId_fkey";
-
--- DropTable
-DROP TABLE "VideoEmbed";
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "PluginData" (
@@ -20,6 +20,9 @@ CREATE TABLE "PluginData" (
 
     CONSTRAINT "PluginData_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Post_slug_key" ON "Post"("slug");
 
 -- AddForeignKey
 ALTER TABLE "PluginData" ADD CONSTRAINT "PluginData_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -8,7 +8,7 @@ import './posts.css'
 
 const Posts = () => {
     const router = useRouter();
-    const [myPosts, setMyPosts] = useState([{...initialPost}])
+    const [myPosts, setMyPosts] = useState([])
 
     const getPosts = async () => {
         try{
@@ -17,7 +17,7 @@ const Posts = () => {
             setMyPosts(data?.posts || [])
             toast.dismiss()
         }catch(error){
-            toast.error(`Error occured ${error.message}`)
+            toast.dismiss()
         }
     }
 
@@ -37,9 +37,9 @@ const Posts = () => {
         <main className='post-container'>
             <div className='justify-between'>
                 <h1>Posts</h1>
-                <button onClick={handlePostRedirection}>+</button>
+                <button onClick={handlePostRedirection}>➕</button>
             </div>
-            <table className='posts-table'>
+            { myPosts.length ? (<table className='posts-table'>
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -61,7 +61,7 @@ const Posts = () => {
                     ))
                 }
                 </tbody>
-            </table>
+            </table>) : <p>No posts found</p>}
         </main>
     )
 }

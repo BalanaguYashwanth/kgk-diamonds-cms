@@ -43,10 +43,10 @@ const Post = () => {
           content: post.content,
           plugins
         });
-        setPost({ ...initialPost });
+        setPost({...initialPost });
       }
       toast.dismiss(toastId);
-      toast.success("Submitted");
+      toast.success("Published");
     } catch (err) {
       toast.dismiss();
       toast.error("Failed to create the post");
@@ -61,14 +61,22 @@ const Post = () => {
   };
 
   const getPostsById = async () => {
-    const response = await fetchPostsById(slug);
-    const plugins = response.plugins;
-    for(let plugin of plugins){
-      if(plugin.type === 'videoEmbed'){
-        setVideoUrl(plugin.data)
+    try{
+      toast.loading('Loading')
+      const response = await fetchPostsById(slug);
+      const plugins = response.plugins;
+      for(let plugin of plugins){
+        if(plugin.type === 'videoEmbed'){
+          setVideoUrl(plugin.data.videoUrl)
+        }
       }
+      setPost(response.post);
+      setPlugins(response.plugins)
+      toast.dismiss();
+    }catch(error){
+      toast.dismiss();
+      toast.error('Failed to load content')
     }
-    setPost(response.post);
   };
 
   useEffect(() => {
@@ -89,8 +97,8 @@ const Post = () => {
     setVideoUrl(url);
     setPlugins([{
       type: "videoEmbed",
-      data: url,
-    }, ...plugins])
+      data: {videoUrl: url},
+    }])
   };
 
   const conditionallyRenderEmbedded = () => {
@@ -133,8 +141,8 @@ const Post = () => {
         />
       </article>
 
-    { conditionallyRenderEmbedded() &&  <article className="margin-top-spacing">
-        <p id="bold">Video Embedded URL</p>
+    {conditionallyRenderEmbedded() &&  <article className="margin-top-spacing">
+        <p id="bold">Video Embedded URL (Plugin)</p>
         <input
           type="text"
           placeholder="Enter embeded video URL"
