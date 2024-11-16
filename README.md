@@ -14,6 +14,11 @@ A modern, extensible Content Management System (CMS) built with Next.js, featuri
 ### Project Structure
 ```
 /my-nextjs-app
+|
+├── prisma/
+|     ├── migrations
+|     └── schema.model
+|
 ├── src/
 │   ├── plugin-system/
 │   │   ├── core/
@@ -24,13 +29,11 @@ A modern, extensible Content Management System (CMS) built with Next.js, featuri
 │   │   ├── plugins/
 │   │   │   ├── video-embed/
 │   │   │   │   ├── index.ts         # Plugin entry point
-│   │   │   │   ├── component.tsx    # Video embed component
-│   │   │   │   └── model.prisma     # Database schema
+│   │   │   │   └── component.tsx     # Database schema
 │   │   │   │
 │   │   │   └── share-button/
 │   │   │       ├── index.ts         # Plugin entry point
-│   │   │       ├── component.tsx    # Share button component
-│   │   │       └── model.prisma     # Database schema
+│   │   │       └── component.tsx      # Database schema
 │   │   │
 │   │   └── PluginSystem.ts          # Plugin system bootstrapper
 │   │

@@ -28,7 +28,11 @@ export async function POST(req) {
 
 export async function GET() {
     try {
-        const posts = await prisma.post.findMany();
+        const posts = await prisma.post.findMany({
+            orderBy: {
+              updatedAt: 'desc',
+            },
+          });
         return NextResponse.json({ posts });
     } catch (err) {
         return NextResponse.json({ error: err.message }, { status: 400 });
