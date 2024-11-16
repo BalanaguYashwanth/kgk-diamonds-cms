@@ -6,8 +6,6 @@ import { createPosts, fetchPostBySlug, updatePostBySlug } from "../common/api.ac
 
 const usePost = () => {
     const [plugins, setPlugins] = useState([])
- 
-  
     const params = useParams();
     const { id: slug } = params;
     const [post, setPost] = useState({ ...initialPost });
@@ -81,11 +79,15 @@ const usePost = () => {
   
     const handleVideoInputChange = (e) => {
       const url = e.target.value;
+      if(url){
+        setPlugins([{
+          type: "videoEmbed",
+          data: { videoUrl: url },
+        }])
+      }else{
+        setPlugins([])
+      }
       setVideoUrl(url);
-      setPlugins([{
-        type: "videoEmbed",
-        data: { videoUrl: url },
-      }])
     };
 
     return { editorKey, handleFieldChange,handlePreview, handleSubmit, handleVideoInputChange, post, slug, videoUrl}
