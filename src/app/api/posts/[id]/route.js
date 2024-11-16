@@ -10,7 +10,11 @@ export async function GET(req, { params }) {
         if (!post) {
             return NextResponse.json({ error: "Post not found" }, { status: 404 });
         }
-        return NextResponse.json({ post });
+        const plugins = await prisma.pluginData.findMany({
+            where: { postId: post.id },
+        });
+
+        return NextResponse.json({ post, plugins });
     } catch (err) {
         return NextResponse.json({ error: err.message }, { status: 400 });
     }

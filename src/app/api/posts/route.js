@@ -3,10 +3,22 @@ import prisma from "../../../db";
 
 export async function POST(req) {
     try {
-        const { title, slug, content } = await req.json();
+        const { title, slug, content, plugins } = await req.json();
         const post = await prisma.post.create({
             data: { title, slug, content }
         });
+        
+        if (plugins && plugins.length > 0) {
+            for (let plugin of plugins) {
+                await prisma.pluginData.create({
+                    data: {
+                        type: plugin.type,
+                        data: plugin.data,
+                        postId: post.id,
+                    },
+                });
+            }
+        }
         
         return NextResponse.json({ post });
     } catch (err) {
