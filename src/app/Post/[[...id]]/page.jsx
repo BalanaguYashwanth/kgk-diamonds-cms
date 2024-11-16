@@ -55,6 +55,11 @@ const Post = () => {
     setVideoUrl("")
   };
 
+  const handlePreview = () => {
+    localStorage.setItem("previewData", JSON.stringify({ ...post, plugins }));
+    window.open("/preview", "_blank");
+  };
+
   const getPostsById = async () => {
     const response = await fetchPostsById(slug);
     const plugins = response.plugins;
@@ -88,6 +93,18 @@ const Post = () => {
     }, ...plugins])
   };
 
+  const conditionallyRenderEmbedded = () => {
+    if(slug){
+      if(!videoUrl){
+        return false
+      }
+    }
+
+    if((VideoEmbedComponent)){
+      return true
+    }
+  }
+  
   return (
     <main className="post-container">
       <Toaster />
@@ -116,7 +133,7 @@ const Post = () => {
         />
       </article>
 
-    { VideoEmbedComponent &&  <article className="margin-top-spacing">
+    { conditionallyRenderEmbedded() &&  <article className="margin-top-spacing">
         <p id="bold">Video Embedded URL</p>
         <input
           type="text"
@@ -133,9 +150,14 @@ const Post = () => {
         </article>
       )}
 
-      <button className="submit-button" onClick={handleSubmit}>
-        Submit
+    <article className="buttons">
+      <button onClick={handlePreview}>
+        Preview
       </button>
+      <button onClick={handleSubmit}>
+        Publish
+      </button>
+    </article>
     </main>
   );
 };

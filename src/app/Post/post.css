@@ -24,13 +24,6 @@ input {
     padding: 0.5rem;
 }
 
-.submit-button{
-    border-color:rgb(191, 184, 184);
-    margin-top: 1rem;
-    padding: 1rem;
-    width: 75px;
-}
-
 .margin-top-spacing{
     margin-top: 4rem;
 }
@@ -41,4 +34,12 @@ input {
 
 .font-small{
     font-size: 14px;
+}
+
+.buttons button{
+    margin: 0px 10px;
+    border-color:rgb(191, 184, 184);
+    margin-top: 1rem;
+    padding: 1rem;
+    width: 75px;
 }
