@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import {paths} from '../../common/constants'
-import { fetchPosts } from '../../common/api.action';
+import { deletePostById, fetchPosts } from '../../common/api.action';
 import toast, { Toaster } from 'react-hot-toast';
 import './posts.css'
 
@@ -18,6 +18,19 @@ const Posts = () => {
             toast.dismiss()
         }catch(error){
             toast.dismiss()
+            toast.error('An error occurred while fetching Posts');
+        }
+    }
+
+    const handleDelete = async (id) => {
+        try{
+            toast.loading('Deleting')
+            await deletePostById(id)
+            toast.dismiss()
+            toast.success('Deleted')
+        } catch(err){
+            toast.dismiss()
+            toast.error('An error occurred while deleting Post');
         }
     }
 
@@ -56,7 +69,7 @@ const Posts = () => {
                             <td>{post.slug}</td>
                             <th>
                                 <button onClick={()=>handleEdit(post.slug)}>✏️</button>
-                                <button>🗑️</button>
+                                <button onClick={()=>handleDelete(post.id)}>🗑️</button>
                             </th>
                         </tr>
                     ))
