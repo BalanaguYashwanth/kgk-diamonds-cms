@@ -1,34 +1,35 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
-import {paths} from '../../common/constants'
-import { deletePostById, fetchPosts } from '../../common/api.action';
 import toast, { Toaster } from 'react-hot-toast';
-import './posts.css'
+import { paths } from '../../common/constants';
+import PostTable from '@/components/PostsTable/postTable';
+import { deletePostById, fetchPosts } from '../../common/api.action';
+import './posts.css';
 
 const Posts = () => {
     const router = useRouter();
     const [myPosts, setMyPosts] = useState([])
 
     const getPosts = async () => {
-        try{
+        try {
             toast.loading('Loading')
             const data = await fetchPosts();
             setMyPosts(data?.posts || [])
             toast.dismiss()
-        }catch(error){
+        } catch (error) {
             toast.dismiss()
             toast.error('An error occurred while fetching Posts');
         }
     }
 
     const handleDelete = async (id) => {
-        try{
+        try {
             toast.loading('Deleting')
             await deletePostById(id)
             toast.dismiss()
             toast.success('Deleted')
-        } catch(err){
+        } catch (err) {
             toast.dismiss()
             toast.error('An error occurred while deleting Post');
         }
@@ -42,9 +43,9 @@ const Posts = () => {
         router.push(`${paths.post}`)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getPosts()
-    },[])
+    }, [])
 
     return (
         <main className='post-container'>
@@ -53,29 +54,7 @@ const Posts = () => {
                 <h1>Posts</h1>
                 <button onClick={handlePostRedirection}>➕</button>
             </div>
-            { myPosts.length ? (<table className='posts-table'>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Slug</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody >
-                {
-                    myPosts.length && myPosts?.map((post, index) => (
-                        <tr key={`post-${index}`}>
-                            <td>{post.title}</td>
-                            <td>{post.slug}</td>
-                            <th>
-                                <button onClick={()=>handleEdit(post.slug)}>✏️</button>
-                                <button onClick={()=>handleDelete(post.id)}>🗑️</button>
-                            </th>
-                        </tr>
-                    ))
-                }
-                </tbody>
-            </table>) : <p>No posts found</p>}
+            {myPosts.length ? (<PostTable myPosts={myPosts} handleDelete={handleDelete} handleEdit={handleEdit} />) : <p>No posts found</p>}
         </main>
     )
 }

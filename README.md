@@ -116,7 +116,7 @@ export class MyPlugin {
 
   boot() {
     this.pluginSystem.registerComponent({
-      name: 'MyPluginComponent Name',
+      name: 'MyPluginComponentName',
       component: MyPluginComponent,
     });
   }
@@ -153,7 +153,8 @@ Register your plugin in the plugin system:
 
 ```javascript
 // src/plugin-system/PluginSystem.ts
-import { MyPlugin } from '@plugins/my-plugin';
+import { PluginSystem } from "../PluginSystem";
+import { MyPlugin } from '../plugins/my-plugin';
 
 PluginSystem.register(new MyPlugin());
 ```
@@ -163,11 +164,11 @@ PluginSystem.register(new MyPlugin());
 Implement the plugin in your pages or components:
 
 ```javascript
-import { usePlugin } from '@core/hooks';
+import { usePluginContext } from './usePluginContext';
 
 const MyPage = () => {
   const { pluginSystem } = usePluginContext();
-  const MyPluginComponent = pluginSystem.getComponent('MyPluginComponent');
+  const MyPluginComponent = pluginSystem.getComponent('MyPluginComponentName');
   
   return (
     <div>
@@ -176,3 +177,9 @@ const MyPage = () => {
   );
 };
 ```
+
+Note - I had few doubts tried reached out recruiter, Answered for few questions, Couldn't get answer for few more
+
+So based the doc which I understand I continued to implemented it.
+
+If any changes or improvements needed open to do it.

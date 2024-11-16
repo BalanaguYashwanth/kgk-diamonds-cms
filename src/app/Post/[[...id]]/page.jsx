@@ -14,7 +14,7 @@ const Post = () => {
       <Toaster />
       <h1>New post</h1>
       <PostForm handleFieldChange={handleFieldChange} post={post} editorKey={editorKey}/>
-      {<PluginView handleVideoInputChange={handleVideoInputChange} slug={slug} videoUrl={videoUrl}/>}
+      <PluginView handleVideoInputChange={handleVideoInputChange} slug={slug} videoUrl={videoUrl}/>
       <article className="buttons">
         <button onClick={handlePreview}>
           Preview
