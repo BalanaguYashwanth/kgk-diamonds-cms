@@ -29,6 +29,7 @@ const usePost = () => {
             plugins
           });
           setPost({ ...initialPost });
+          setPlugins([])
         }
         toast.dismiss(toastId);
         toast.success("Published");
